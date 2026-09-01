@@ -343,3 +343,70 @@ input, textarea, select {
   font-size: var(--text-lg);
   max-width: 40ch;
 }
+
+/* --- Shared form utilities (used by Workshops, Contact, etc.) --- */
+
+/* Two-column field row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* Honeypot — positioned off-screen, NOT display:none (bots watch for that) */
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-submit-error {
+  font-size: var(--text-sm);
+  color: #DC2626;
+  font-weight: 500;
+  padding: var(--space-3) var(--space-4);
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  border-radius: var(--radius-lg);
+}
+
+.form-privacy {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Form success state */
+.form-success {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.form-success__icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.form-success h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+}
+
+.form-success p {
+  color: var(--color-text-muted);
+  max-width: 40ch;
+  line-height: 1.6;
+}
