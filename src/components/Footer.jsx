@@ -58,7 +58,7 @@ export default function Footer() {
       <div className="footer__top container">
         {/* Brand column */}
         <div className="footer__brand">
-          <Link to="/" className="footer__logo" aria-label="Build Buddies">
+          <Link to="/" className="footer__logo" aria-label="Techids">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36" aria-hidden="true">
               <rect width="40" height="40" rx="8" fill="var(--color-primary)"/>
               <rect x="6" y="12" width="3.5" height="18" fill="white" rx="0.5"/>
@@ -70,7 +70,7 @@ export default function Footer() {
               <line x1="26" y1="17.5" x2="26" y2="27" stroke="#F97316" strokeWidth="1.2"/>
             </svg>
             <span className="footer__logo-text">
-              Build<span>Buddies</span>
+              Tech<span>ids</span>
             </span>
           </Link>
 
@@ -111,7 +111,7 @@ export default function Footer() {
         {/* Newsletter column */}
         <div className="footer__col footer__newsletter">
           <h3 className="footer__col-heading">Stay in the loop</h3>
-          <p>Get updates on new programs, events, and how to bring Build Buddies to your school.</p>
+          <p>Get updates on new programs, events, and how to bring Techids to your school.</p>
           <form
             className="footer__form"
             onSubmit={(e) => e.preventDefault()}
@@ -130,7 +130,7 @@ export default function Footer() {
 
       <div className="footer__bottom container">
         <p className="footer__copy">
-          &copy; {new Date().getFullYear()} Build Buddies. A student-founded STEM education organization.
+          &copy; {new Date().getFullYear()} Techids. A student-founded STEM education organization.
         </p>
         <div className="footer__bottom-links">
           <a href="#">Privacy Policy</a>

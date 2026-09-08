@@ -1,5 +1,6 @@
 import FormField from '../components/FormField'
 import { useForm, required, email, compose, maxLength, minLength } from '../hooks/useForm'
+import { addSubmission } from '../auth/submissionStore'
 import './Contact.css'
 
 // ---- Form setup -------------------------------------------------------
@@ -49,9 +50,9 @@ function ContactForm() {
 
   const showOrg = ORG_ROLES.has(values.role)
 
-  const onSubmit = async () => {
-    // TODO: Replace with your backend API call.
-    await new Promise((res) => setTimeout(res, 700))
+  const onSubmit = async (data) => {
+    addSubmission('contact', data, data.email)
+    await new Promise((res) => setTimeout(res, 400))
   }
 
   if (submitted) {
@@ -241,7 +242,7 @@ export default function Contact() {
                   <span className="contact-card__icon" aria-hidden="true">🤝</span>
                   <div>
                     <h3>Sponsors &amp; Partners</h3>
-                    <p>Interested in supporting Build Buddies? Tell us about your organization and goals.</p>
+                    <p>Interested in supporting Techids? Tell us about your organization and goals.</p>
                   </div>
                 </div>
                 <div className="contact-card">

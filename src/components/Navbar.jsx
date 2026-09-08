@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../auth/AuthContext'
 import './Navbar.css'
 
 const navLinks = [
@@ -16,32 +17,25 @@ export default function Navbar() {
   const [scrolled, setScrolled]  = useState(false)
   const menuRef = useRef(null)
   const { pathname } = useLocation()
+  const { currentUser, logout } = useAuth()
 
-  // Close menu on route change
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [pathname])
+  useEffect(() => { setMenuOpen(false) }, [pathname])
 
-  // Scroll shadow
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu on outside click
   useEffect(() => {
     if (!menuOpen) return
     const handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false)
-      }
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [menuOpen])
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -51,23 +45,19 @@ export default function Navbar() {
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`} ref={menuRef}>
       <div className="navbar__inner container">
         {/* Logo */}
-        <Link to="/" className="navbar__logo" aria-label="Build Buddies — Home">
+        <Link to="/" className="navbar__logo" aria-label="Techids — Home">
           <svg className="navbar__logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect width="40" height="40" rx="8" fill="var(--color-primary)"/>
-            {/* Bridge towers */}
             <rect x="6" y="12" width="3.5" height="18" fill="white" rx="0.5"/>
             <rect x="30.5" y="12" width="3.5" height="18" fill="white" rx="0.5"/>
-            {/* Deck */}
             <rect x="5" y="27" width="30" height="3" fill="white" rx="0.5"/>
-            {/* Cable */}
             <path d="M7.75 14 Q20 20 32.25 14" stroke="#F97316" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            {/* Hangers */}
             <line x1="14" y1="17.5" x2="14" y2="27" stroke="#F97316" strokeWidth="1.2"/>
             <line x1="20" y1="20" x2="20" y2="27" stroke="#F97316" strokeWidth="1.2"/>
             <line x1="26" y1="17.5" x2="26" y2="27" stroke="#F97316" strokeWidth="1.2"/>
           </svg>
           <span className="navbar__logo-text">
-            Build<span className="navbar__logo-accent">Buddies</span>
+            Tech<span className="navbar__logo-accent">ids</span>
           </span>
         </Link>
 
@@ -77,19 +67,32 @@ export default function Navbar() {
             <NavLink
               key={to}
               to={to}
-              className={({ isActive }) =>
-                `navbar__link${isActive ? ' navbar__link--active' : ''}`
-              }
+              className={({ isActive }) => `navbar__link${isActive ? ' navbar__link--active' : ''}`}
             >
               {label}
             </NavLink>
           ))}
         </nav>
 
-        {/* Desktop CTAs */}
+        {/* Desktop CTAs + auth */}
         <div className="navbar__actions">
-          <Link to="/donate" className="btn btn-outline btn-sm">Donate</Link>
-          <Link to="/workshops" className="btn btn-accent btn-sm">Book a Workshop</Link>
+          {currentUser?.role === 'admin' ? (
+            <>
+              <Link to="/admin" className="btn btn-primary btn-sm">Dashboard</Link>
+              <button className="btn btn-outline btn-sm" onClick={logout}>Sign Out</button>
+            </>
+          ) : currentUser ? (
+            <>
+              <Link to="/portal" className="btn btn-outline btn-sm">My Requests</Link>
+              <button className="btn btn-outline btn-sm" onClick={logout}>Sign Out</button>
+            </>
+          ) : (
+            <>
+              <Link to="/donate" className="btn btn-outline btn-sm">Donate</Link>
+              <Link to="/workshops" className="btn btn-accent btn-sm">Book a Workshop</Link>
+              <Link to="/login" className="btn btn-outline btn-sm">Sign In</Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -99,9 +102,7 @@ export default function Navbar() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
-          <span />
-          <span />
-          <span />
+          <span /><span /><span />
         </button>
       </div>
 
@@ -122,8 +123,23 @@ export default function Navbar() {
           ))}
         </nav>
         <div className="navbar__mobile-actions">
-          <Link to="/donate" className="btn btn-outline" tabIndex={menuOpen ? 0 : -1}>Donate</Link>
-          <Link to="/workshops" className="btn btn-accent" tabIndex={menuOpen ? 0 : -1}>Book a Workshop</Link>
+          {currentUser?.role === 'admin' ? (
+            <>
+              <Link to="/admin" className="btn btn-primary" tabIndex={menuOpen ? 0 : -1}>Dashboard</Link>
+              <button className="btn btn-outline" onClick={logout} tabIndex={menuOpen ? 0 : -1}>Sign Out</button>
+            </>
+          ) : currentUser ? (
+            <>
+              <Link to="/portal" className="btn btn-outline" tabIndex={menuOpen ? 0 : -1}>My Requests</Link>
+              <button className="btn btn-outline" onClick={logout} tabIndex={menuOpen ? 0 : -1}>Sign Out</button>
+            </>
+          ) : (
+            <>
+              <Link to="/donate" className="btn btn-outline" tabIndex={menuOpen ? 0 : -1}>Donate</Link>
+              <Link to="/workshops" className="btn btn-accent" tabIndex={menuOpen ? 0 : -1}>Book a Workshop</Link>
+              <Link to="/login" className="btn btn-outline" tabIndex={menuOpen ? 0 : -1}>Sign In</Link>
+            </>
+          )}
         </div>
       </div>
     </header>

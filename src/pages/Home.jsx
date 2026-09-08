@@ -187,7 +187,7 @@ export default function Home() {
             Like <span className="hero__accent">Engineers.</span>
           </h1>
           <p className="hero__sub">
-            Build Buddies gives students the tools to design, build, test, and improve
+            Techids gives students the tools to design, build, test, and improve
             real solutions — not just read about engineering, but live it.
           </p>
           <div className="hero__actions">
@@ -334,7 +334,7 @@ export default function Home() {
         <div className="container school-cta__inner">
           <div>
             <h2 className="heading-lg" id="school-cta-heading">
-              Bring Build Buddies to Your School
+              Bring Techids to Your School
             </h2>
             <p>
               We handle everything — materials, facilitation, and the engineering challenge.
