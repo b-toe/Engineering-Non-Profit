@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import FormField from '../components/FormField'
 import { useForm, required, email, compose, maxLength, minLength } from '../hooks/useForm'
+import { addSubmission } from '../auth/submissionStore'
 import './Workshops.css'
 
 // ---- Workshop structure steps ----------------------------------------
@@ -55,10 +56,8 @@ function WorkshopForm() {
   } = useForm(initialValues, rules)
 
   const onSubmit = async (data) => {
-    // TODO: Replace with your backend API call.
-    // Example: await fetch('/api/workshop-request', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } })
-    // For now, simulate a short delay so the loading state is visible.
-    await new Promise((res) => setTimeout(res, 800))
+    addSubmission('workshop', data, data.email)
+    await new Promise((res) => setTimeout(res, 400))
   }
 
   if (submitted) {
@@ -303,7 +302,7 @@ export default function Workshops() {
             <span className="section-label">What to Expect</span>
             <h2 className="heading-lg" id="how-it-works">How a Workshop Runs</h2>
             <p className="section-intro__sub">
-              Every Build Buddies workshop follows the same structure — a proven format designed to keep students engaged from the first minute to the last.
+              Every Techids workshop follows the same structure — a proven format designed to keep students engaged from the first minute to the last.
             </p>
           </div>
           <ol className="workshop-steps" aria-label="Workshop structure" role="list">
@@ -330,7 +329,7 @@ export default function Workshops() {
               <ul className="workshop-includes" aria-label="What's included">
                 {[
                   'All materials provided',
-                  'Facilitation by Build Buddies team',
+                  'Facilitation by Techids team',
                   'Setup and full cleanup',
                   'Curriculum-aligned learning objectives',
                   'Post-workshop summary for teachers',
